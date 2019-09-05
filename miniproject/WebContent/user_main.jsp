@@ -21,7 +21,7 @@ response.setDateHeader("Expires", 0L);
 <h1>메인 메뉴</h1>
 <%
 	if(ldto==null){
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("index2.jsp");
 	}else{
 	%>
 	<div>

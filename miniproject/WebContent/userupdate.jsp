@@ -29,15 +29,15 @@
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type="text" name="address" value="<%=dto.getTaddress()%>"/></td>
+			<td><input type="text" name="taddress" value="<%=dto.getTaddress()%>"/></td>
 		</tr>
 		<tr>
 			<th>전화번호</th>
-			<td><input type="text" name="phone" value="<%=dto.getTphone()%>"/></td>
+			<td><input type="text" name="tphone" value="<%=dto.getTphone()%>"/></td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td><input type="text" name="email" value="<%=dto.getTemail()%>"/></td>
+			<td><input type="text" name="temail" value="<%=dto.getTemail()%>"/></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="right">

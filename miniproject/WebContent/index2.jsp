@@ -103,9 +103,9 @@ input[type="checkbox"] {
    <div class="form">
     <div class="form2">
      <div class="form3">
-      <label for="user">아이디</label><input type="text" id="tid">
+      <label for="user">아이디</label><input type="text" name="tid">
       <div class="clear"></div>
-      <label for="user">비밀번호</label><input type="password" id="tpassword">
+      <label for="user">비밀번호</label><input type="password" name="tpassword">
      </div>
     <input type="submit" value="로그인하기">
      <div class="clear"></div>

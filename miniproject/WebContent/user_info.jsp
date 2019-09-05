@@ -40,8 +40,8 @@
 	</tr>
 	<tr>
 		<td colspan="2" align="right">
-			<button onclick="withdraw(<%=dto.getTid()%>)">회원탈퇴</button>
-			<button onclick="userUpdate(<%=dto.getTid()%>)">정보수정</button>
+			<button onclick="withdraw('<%=dto.getTid()%>')">회원탈퇴</button>
+			<button onclick="userUpdate('<%=dto.getTid()%>')">정보수정</button>
 		</td>
 	</tr>
 </table>

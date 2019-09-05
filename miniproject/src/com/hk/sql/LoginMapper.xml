@@ -29,7 +29,7 @@
 	
 <!-- 	회원탈퇴 -->
 	<update id="withdraw" parameterType="String">
-		UPDATE MEMBERINFO SET ENABLED='N' WHERE TID=#{tid}
+		UPDATE MEMBERINFO SET TENABLED='N' WHERE TID=#{tid}
 	</update>
 	
 <!-- 	아이디 중복체크 -->
