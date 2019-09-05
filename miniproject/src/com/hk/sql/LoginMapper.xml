@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hk.login">
+	
+<!-- 	회원가입 -->
+	<insert id="insertUser" parameterType="LoginDto">
+		INSERT INTO MEMBERINFO VALUES(#{tid},
+		#{tpassword},#{tname},#{taddress},#{tphone},#{temail},'Y','USER')
+	</insert>
+	
+<!-- 	로그인 -->
+	<select id="getLogin" parameterType="LoginDto" resultType="LoginDto">
+		SELECT TID, TPASSWORD, TNAME, TADDRESS, TPHONE, TEMAIL, TENABLED, TROLE
+		FROM MEMBERINFO WHERE TID=#{tid} AND TPASSWORD=#{tpassword}
+	</select>
+	
+<!-- 	내 정보 조회 -->
+	<select id="userinfo" parameterType="String" resultType="LoginDto">
+		SELECT TID, TNAME, TADDRESS, TPHONE, TEMAIL
+		FROM MEMBERINFO WHERE TID=#{tid}
+	</select>
+	
+<!-- 	정보수정 -->
+	<update id="userUpdate" parameterType="LoginDto">
+		UPDATE MEMBERINFO SET TADDRESS=#{taddress}, TPHONE=#{tphone},
+		TEMAIL=#{temail} WHERE TID=#{tid}
+	</update>
+	
+<!-- 	회원탈퇴 -->
+	<update id="withdraw" parameterType="String">
+		UPDATE MEMBERINFO SET ENABLED='N' WHERE TID=#{tid}
+	</update>
+	
+<!-- 	아이디 중복체크 -->
+	<select id="idChk" parameterType="String" resultType="LoginDto">
+		SELECT TID FROM MEMBERINFO WHERE TID=#{tid}
+	</select>
+	
+<!-- 	중복쿼리 -->
+	<sql id="a">
+		SELECT TID, TPASSWORD, TADDRESS, TNAME, TADDRESS, TPHONE, TEMAIL, TENABLED, TROLE
+		FROM MEMBERINFO
+	</sql>
+	
+<!-- 	전체 회원 조회(탈퇴O) -->
+	<select id="getAllUserStatus" resultType="LoginDto">
+		<include refid="a"/>
+		ORDER BY TID
+	</select>
+	
+<!-- 	사용자 조회(탈퇴X) -->
+	<select id="getAllUserList" resultType="LoginDto">
+		<include refid="a"/>
+		WHERE TENABLED='Y' ORDER BY TID
+	</select>
+	
+<!-- 	사용자 상세조회 -->
+	<select id="getUser" parameterType="String" resultType="LoginDto">
+		<include refid="a"/>
+		 WHERE TID=#{tid}
+	</select>
+	
+<!-- 	사용자 등급 변경 -->
+	<update id="updateUserRole" parameterType="LoginDto">
+		UPDATE MEMBERINFO SET TROLE=#{trole} WHERE TID=#{tid}
+	</update>
+</mapper>
