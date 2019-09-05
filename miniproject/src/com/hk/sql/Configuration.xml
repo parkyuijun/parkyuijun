@@ -7,6 +7,7 @@
 <!-- 	변수설정 -->
 	<typeAliases>
 		<typeAlias type="com.hk.dtos.LoginDto" alias="LoginDto"/>
+		<typeAlias type="com.hk.dtos.BoardDto" alias="BoardDto"/>
 	</typeAliases>
 	
 <!-- 	DB접속 정보 셋팅 -->

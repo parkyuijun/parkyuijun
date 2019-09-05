@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
 			boolean isS = dao.insertUser(new LoginDto(id,password,name,address,phone,email,null,null));
 			
 			if(isS){
-				jsForward("index2.jsp", "회원가입을 축하합니다.!!!", response);
+				jsForward("index.jsp", "회원가입을 축하합니다.!!!", response);
 			}else{
 				request.setAttribute("msg", "회원가입 실패");
 				dispatch("error.jsp", request, response);
@@ -78,7 +78,7 @@ public class LoginController extends HttpServlet {
 			}
 		}else if(command.equals("logout")){
 			session.invalidate(); //세션지우기
-			response.sendRedirect("index2.jsp");
+			response.sendRedirect("index.jsp");
 		}else if(command.equals("idChk")){
 			String id = request.getParameter("tid");
 			LoginDto dto = dao.idChk(id);

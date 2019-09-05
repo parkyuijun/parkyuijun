@@ -21,7 +21,7 @@ response.setDateHeader("Expires", 0L);
 <h1>메인 메뉴</h1>
 <%
 	if(ldto==null){
-		response.sendRedirect("index2.jsp");
+		response.sendRedirect("index.jsp");
 	}else{
 	%>
 	<div>
@@ -30,7 +30,14 @@ response.setDateHeader("Expires", 0L);
 	</div>
 	<ul>
 		<li><a href="LoginController.do?command=userinfo&tid=<%=ldto.getTid()%>">내 정보보기</a></li>
+		<li><a href="BoardController.do?command=boardlist&tid=<%=ldto.getTid()%>">전체 글보기</a></li>
 	</ul>
+	<legend>의류</legend>
+	<select name="selsite" onchange="selPage06()">
+		<option value="http://www.naver.com">상의</option>
+		<option value="http://www.daum.net">하의</option>
+		<option value="http://www.hankyung.com">신발</option>
+	</select>
 	<%
 	}
 %>

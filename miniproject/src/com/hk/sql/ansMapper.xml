@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hk.ansboard">
+
+	<sql id="a">
+		SELECT SEQ,ID,TITLE,CONTENT,REF,STEP,DEPTH,READCOUNT,DELFLAG,REGDATE,ISNOTICE,SELLBUY 
+		FROM BOARDTABLE 
+	</sql>
+
+	<select id="boardlist" resultType="ansDto" parameterType="Map">
+		<include refid="a"/>
+		<where>
+			<if test="seq!=null">
+				SEQ=#{seq}					
+			</if>
+		</where>
+		ORDER BY REFER,STEP 
+	</select>
+	
+	<select id="getboard" parameterType="int">
+		<include refid="a"/>
+		WHERE SEQ=#{seq}
+	</select>
+	
+	<insert id="insertboard" parameterType="ansDto">
+		INSERT INTO ANSWERBOARD (SEQ,ID,TITLE,CONTENT,REGDATE,REFER,
+		STEP,DEPTH,READCOUNT,DELFLAG) 
+		VALUES(ANSWERBOARD_SEQ.NEXTVAL,#{id},#{title},#{content},SYSDATE, 
+		(SELECT NVL(MAX(REFER)+1,0) FROM ANSWERBOARD ),0,0,0,'N')
+	</insert>
+	
+	<update id="updateboard" parameterType="ansDto">
+		UPDATE ANSWERBOARD SET TITLE=#{title},CONTENT=#{content},REGDATE=SYSDATE 
+		WHERE SEQ=#{seq} 
+	</update>
+	
+	<update id="muldel" parameterType="Map">
+		UPDATE ANSWERBOARD SET DELFLAG='Y' WHERE SEQ IN 
+		<foreach collection="seqs" item="seq" open="(" close=")" separator=",">
+			#{seq}
+		</foreach>
+	</update>
+	
+	<update id="readcount" parameterType="int">
+		<![CDATA[
+		UPDATE ANSWERBOARD SET READCOUNT=READCOUNT+1
+		WHERE SEQ=#{seq} 
+		]]>
+	</update>
+	
+	<update id="replyupdate" parameterType="ansDto">
+		<![CDATA[
+			UPDATE ANSWERBOARD SET STEP=STEP+1
+			WHERE REFER=(SELECT REFER FROM ANSWERBOARD WHERE SEQ=#{seq})
+			AND STEP > (SELECT STEP FROM ANSWERBOARD WHERE SEQ=#{seq})		
+		]]>
+	</update>
+	<insert id="replyinsert" parameterType="ansDto">
+		INSERT INTO ANSWERBOARD 
+		VALUES(ANSWERBOARD_SEQ.NEXTVAL,#{id},#{title},#{content},SYSDATE, 
+		(SELECT REFER FROM ANSWERBOARD WHERE SEQ=#{seq}), 
+		(SELECT STEP FROM ANSWERBOARD WHERE SEQ=#{seq})+1, 
+		(SELECT DEPTH FROM ANSWERBOARD WHERE SEQ=#{seq})+1,0,'N')
+	</insert>
+	
+	<select id="contentAjax" parameterType="int" resultType="ansDto">
+		SELECT CONTENT FROM ANSWERBOARD WHERE SEQ=#{seq}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
