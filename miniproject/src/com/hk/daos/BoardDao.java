@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
-
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.hk.config.SqlMapConfig;
 import com.hk.dtos.BoardDto;
+
 
 public class BoardDao extends SqlMapConfig  {
 
@@ -20,7 +21,38 @@ public class BoardDao extends SqlMapConfig  {
 	
 	private String nameSpace = "com.hk.ansboard.";
 	
-	
+	//글목록의 페이지 개수 구하기
+		public int getPcount() {
+			SqlSession sqlSession=null;
+			int pcount=0;
+			
+			try {
+				sqlSession=getSqlSessionFactory().openSession(true);
+				pcount=sqlSession.selectOne(nameSpace+"pcount");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				sqlSession.close();
+			}
+			return pcount;
+		}
+		
+		//글목록 조회(페이징처리): 파라미터가 필요(페이지번호)
+		public List<BoardDto> getAllListPage(String pnum){
+			List<BoardDto> list=new ArrayList<>();
+			SqlSession sqlSession=null;
+			
+			try {
+				SqlSessionFactory sqlSessionFactory=getSqlSessionFactory();
+				sqlSession=sqlSessionFactory.openSession(true);//autocommit->true
+				list=sqlSession.selectList(nameSpace+"boardlistpaging",pnum);//list[hkdto,hkdto...]
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				sqlSession.close();
+			}
+			return list;
+		}
 	//전체글보기(list를 반환)
 		public List<BoardDto> getAllList(){
 			List<BoardDto> list=new ArrayList<>();

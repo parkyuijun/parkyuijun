@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="com.hk.dtos.BoardDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
@@ -50,6 +51,7 @@
 	
 </style>
 </head>
+<%-- <%Map<String,Integer>map=(Map<String,Integer>)request.getAttribute("pmap");%> --%>
 <body>
 
 <jsp:include page="header.jsp"  />
@@ -124,6 +126,7 @@
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
+
 	<tr>
 		<td colspan="10">
 			<input type="button" value="글추가" 

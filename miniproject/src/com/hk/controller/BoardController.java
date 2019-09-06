@@ -2,6 +2,7 @@ package com.hk.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import com.hk.daos.BoardDao;
 import com.hk.dtos.BoardDto;
+
+
 
 
 @WebServlet("/BoardController.do")
@@ -34,7 +37,29 @@ public class BoardController extends HttpServlet {
 		
 		BoardDao dao=new BoardDao();
 		
-		if(command.equals("boardlist")) {
+//		if(command.equals("boardlistpage")) {
+//			//요청 페이지 번호 받기
+//			String pnum=request.getParameter("pnum");
+//			//list: 요청페이지에 해당하는 글목록 가져오기
+//			
+//			//글목록을 요청할때 따로 pnum 파라미터를 전달하지 않아도 목록을 볼 수 있게 전에 담긴 pnum을 사용
+//			if(pnum==null) {
+//				pnum=(String)request.getSession().getAttribute("pnum");
+//			}else {
+//				request.getSession().setAttribute("pnum", pnum);
+//			}
+//			
+//			List<BoardDto> list=dao.getAllListPage(pnum);
+//			//페이지의 개수를 구하기
+//			int pcount=dao.getPcount();
+//			
+//			Map<String, Integer>map=Paging.pagingValue(pcount, pnum, 5);
+//			
+//			request.setAttribute("pmap", map);
+//			request.setAttribute("list", list);
+//			dispatch("boardlist.jsp", request, response);
+//		}else 
+			if(command.equals("boardlist")) {
 			//"readcount"값을 삭제한다. 
 			request.getSession().removeAttribute("readcount");
 			
