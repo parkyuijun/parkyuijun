@@ -25,6 +25,7 @@
 	
 	<mappers>
 		<mapper resource="com/hk/sql/LoginMapper.xml"/>
+		<mapper resource="com/hk/sql/ansMapper.xml"/>
 	</mappers>
 </configuration>
 

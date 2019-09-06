@@ -9,7 +9,7 @@
 </head>
 <body>
 <footer>
-	<address>한경닷컴 교육센터(양평동)</address>
+	<address>중고나라 게시판</address>
 </footer>
 </body>
 </html>

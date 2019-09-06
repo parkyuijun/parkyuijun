@@ -8,14 +8,14 @@
 		FROM BOARDTABLE 
 	</sql>
 
-	<select id="boardlist" resultType="ansDto" parameterType="Map">
+	<select id="boardlist" resultType="BoardDto" parameterType="Map">
 		<include refid="a"/>
 		<where>
 			<if test="seq!=null">
 				SEQ=#{seq}					
 			</if>
 		</where>
-		ORDER BY REFER,STEP 
+		ORDER BY REF DESC,STEP ASC
 	</select>
 	
 	<select id="getboard" parameterType="int">
@@ -23,20 +23,19 @@
 		WHERE SEQ=#{seq}
 	</select>
 	
-	<insert id="insertboard" parameterType="ansDto">
-		INSERT INTO ANSWERBOARD (SEQ,ID,TITLE,CONTENT,REGDATE,REFER,
-		STEP,DEPTH,READCOUNT,DELFLAG) 
-		VALUES(ANSWERBOARD_SEQ.NEXTVAL,#{id},#{title},#{content},SYSDATE, 
-		(SELECT NVL(MAX(REFER)+1,0) FROM ANSWERBOARD ),0,0,0,'N')
+	<insert id="insertboard" parameterType="BoardDto">
+		INSERT INTO BOARDTABLE (SEQ,ID,TITLE,CONTENT,REF,STEP,DEPTH,READCOUNT,DELFLAG,REGDATE,ISNOTICE,SELLBUY ) 
+		VALUES(BOARDTABLE_SEQ.NEXTVAL,#{id},#{title},#{content}, 
+		(SELECT NVL(MAX(REF)+1,0) FROM BOARDTABLE ),0,0,0,'N',SYSDATE,'N','Y')
 	</insert>
 	
-	<update id="updateboard" parameterType="ansDto">
-		UPDATE ANSWERBOARD SET TITLE=#{title},CONTENT=#{content},REGDATE=SYSDATE 
+	<update id="updateboard" parameterType="BoardDto">
+		UPDATE BOARDTABLE SET TITLE=#{title},CONTENT=#{content},REGDATE=SYSDATE 
 		WHERE SEQ=#{seq} 
 	</update>
 	
 	<update id="muldel" parameterType="Map">
-		UPDATE ANSWERBOARD SET DELFLAG='Y' WHERE SEQ IN 
+		UPDATE BOARDTABLE SET DELFLAG='Y' WHERE SEQ IN 
 		<foreach collection="seqs" item="seq" open="(" close=")" separator=",">
 			#{seq}
 		</foreach>
@@ -44,28 +43,28 @@
 	
 	<update id="readcount" parameterType="int">
 		<![CDATA[
-		UPDATE ANSWERBOARD SET READCOUNT=READCOUNT+1
+		UPDATE BOARDTABLE SET READCOUNT=READCOUNT+1
 		WHERE SEQ=#{seq} 
 		]]>
 	</update>
 	
-	<update id="replyupdate" parameterType="ansDto">
+	<update id="replyupdate" parameterType="BoardDto">
 		<![CDATA[
-			UPDATE ANSWERBOARD SET STEP=STEP+1
-			WHERE REFER=(SELECT REFER FROM ANSWERBOARD WHERE SEQ=#{seq})
-			AND STEP > (SELECT STEP FROM ANSWERBOARD WHERE SEQ=#{seq})		
+			UPDATE BOARDTABLE SET STEP=STEP+1
+			WHERE REF=(SELECT REF FROM BOARDTABLE WHERE SEQ=#{seq})
+			AND STEP > (SELECT STEP FROM BOARDTABLE WHERE SEQ=#{seq})		
 		]]>
 	</update>
-	<insert id="replyinsert" parameterType="ansDto">
-		INSERT INTO ANSWERBOARD 
-		VALUES(ANSWERBOARD_SEQ.NEXTVAL,#{id},#{title},#{content},SYSDATE, 
-		(SELECT REFER FROM ANSWERBOARD WHERE SEQ=#{seq}), 
-		(SELECT STEP FROM ANSWERBOARD WHERE SEQ=#{seq})+1, 
-		(SELECT DEPTH FROM ANSWERBOARD WHERE SEQ=#{seq})+1,0,'N')
+	<insert id="replyinsert" parameterType="BoardDto">
+		INSERT INTO BOARDTABLE 
+		VALUES(BOARDTABLE_SEQ.NEXTVAL,#{id},#{title},#{content},
+		(SELECT REF FROM BOARDTABLE WHERE SEQ=#{seq}), 
+		(SELECT STEP FROM BOARDTABLE WHERE SEQ=#{seq})+1, 
+		(SELECT DEPTH FROM BOARDTABLE WHERE SEQ=#{seq})+1,0,'N',SYSDATE,'N','Y')
 	</insert>
 	
-	<select id="contentAjax" parameterType="int" resultType="ansDto">
-		SELECT CONTENT FROM ANSWERBOARD WHERE SEQ=#{seq}
+	<select id="contentAjax" parameterType="int" resultType="BoardDto">
+		SELECT CONTENT FROM BOARDTABLE WHERE SEQ=#{seq}
 	</select>
 </mapper>
 

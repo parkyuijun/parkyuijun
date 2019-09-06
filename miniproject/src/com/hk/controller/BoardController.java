@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.hk.daos.BoardDao;
 import com.hk.dtos.BoardDto;
@@ -27,15 +28,15 @@ public class BoardController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
+		HttpSession session = request.getSession();
+		
 		String command=request.getParameter("command");
 		
 		BoardDao dao=new BoardDao();
 		
 		if(command.equals("boardlist")) {
-			System.out.println("gdgd");
 			//"readcount"값을 삭제한다. 
 			request.getSession().removeAttribute("readcount");
-			
 			
 			List<BoardDto> list=dao.getAllList();
 			request.setAttribute("list", list);
@@ -62,7 +63,7 @@ public class BoardController extends HttpServlet {
 			String [] seqs=request.getParameterValues("chk");
 			boolean isS=dao.mulDel(seqs);
 			if(isS) {
-				response.sendRedirect("AnsController.do?command=boardlist");
+				response.sendRedirect("BoardController.do?command=boardlist");
 			}else {
 				request.setAttribute("msg", "글여러개삭제실패");
 				dispatch("error.jsp", request, response);
@@ -74,9 +75,10 @@ public class BoardController extends HttpServlet {
 			String title=request.getParameter("title");
 			String content=request.getParameter("content");
 			
+			
 			boolean isS=dao.insertBoard(new BoardDto(id,title,content));
 			if(isS) {
-				response.sendRedirect("AnsController.do?command=boardlist");
+				response.sendRedirect("BoardController.do?command=boardlist");
 			}else {
 				request.setAttribute("msg", "글추가실패");
 				dispatch("error.jsp", request, response);
@@ -93,7 +95,7 @@ public class BoardController extends HttpServlet {
 			
 			boolean isS=dao.updateBoard(new BoardDto(seq,title,content));
 			if(isS) {
-				response.sendRedirect("AnsController.do?command=boarddetail&seq="+seq);
+				response.sendRedirect("BoardController.do?command=boarddetail&seq="+seq);
 			}else {
 				request.setAttribute("msg", "글수정하기 실패");
 				dispatch("error.jsp", request, response);
@@ -106,7 +108,7 @@ public class BoardController extends HttpServlet {
 			
 			boolean isS=dao.replyBoard(new BoardDto(seq,id,title,content));
 			if(isS) {
-				response.sendRedirect("AnsController.do?command=boardlist");
+				response.sendRedirect("BoardController.do?command=boardlist");
 			}else {
 				request.setAttribute("msg", "답글달기실패");
 				dispatch("error.jsp", request, response);
