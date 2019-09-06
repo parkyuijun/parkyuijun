@@ -20,7 +20,7 @@
 	LoginDto ldto = (LoginDto)session.getAttribute("ldto");
 	if(ldto==null || ldto.getTid()==null){
 		%>
-		<a href="index2.jsp">메인페이지</a>
+		<a href="index.jsp">메인페이지</a>
 		<%
 	}else{
 		if(ldto.getTrole().equals("ADMIN")){

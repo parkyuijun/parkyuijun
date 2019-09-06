@@ -35,8 +35,33 @@ public class BoardDto {
 		this.isnotice = isnotice;
 		this.sellbuy = sellbuy;
 	}
+	
+
+	public BoardDto(String id, String title, String content) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+	}
 
 	
+	
+	public BoardDto(int seq, String title, String content) {
+		super();
+		this.seq = seq;
+		this.title = title;
+		this.content = content;
+	}
+	
+	
+
+	public BoardDto(int seq, String id, String title, String content) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+	}
 
 	public int getSeq() {
 		return seq;
