@@ -51,7 +51,7 @@
 	
 </style>
 </head>
-<%-- <%Map<String,Integer>map=(Map<String,Integer>)request.getAttribute("pmap");%> --%>
+<%Map<String,Integer>map=(Map<String,Integer>)request.getAttribute("pmap");%>
 <body>
 
 <jsp:include page="header.jsp"  />
@@ -81,7 +81,6 @@
 		<th>제 목</th>
 		<th>작성일</th>
 		<th>조회수</th>
-		<th>삭제여부</th>
 	</tr>
 	<c:choose>
 		<c:when test="${empty list}">
@@ -121,12 +120,24 @@
 					</c:choose>
 					<td><fmt:formatDate value="${dto.regdate}" pattern="yyyy년MM월dd일"/> </td>
 					<td>${dto.readcount}</td>
-					<td>${dto.delflag}</td>
 				</tr>
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
-
+	<tr>
+					<td colspan="6" style="text-align: center;">
+						<a href="BoardController.do?command=boardlistpage&pnum=<%=map.get("prePageNum")%>">◀</a>
+						<%  //requestScope["pcount",Object[Integer 1]]
+							int pcount=(Integer)request.getAttribute("pcount");
+							for(int i=map.get("startPage");i<=map.get("endPage");i++){
+								%>
+								<a href="BoardController.do?command=boardlistpage&pnum=<%=i%>" style="text-decoration: none"><%=i%></a>
+								<% 
+							}
+						%>
+						<a href="BoardController.do?command=boardlistpage&pnum=<%=map.get("nextPageNum")%>">▶</a>
+					</td>
+				</tr>
 	<tr>
 		<td colspan="10">
 			<input type="button" value="글추가" 

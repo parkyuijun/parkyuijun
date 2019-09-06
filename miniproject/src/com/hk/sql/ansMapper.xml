@@ -9,6 +9,19 @@
 		SELECT SEQ,ID,TITLE,CONTENT,REF,STEP,DEPTH,READCOUNT,DELFLAG,REGDATE,ISNOTICE,SELLBUY 
 		FROM BOARDTABLE 
 	</sql>
+	
+	<select id="boardlistpaging" resultType="BoardDto" parameterType="String">  
+		SELECT RN,SEQ, ID, TITLE, CONTENT, REF, STEP, DEPTH, READCOUNT, DELFLAG, REGDATE, ISNOTICE, SELLBUY
+		FROM(
+		SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) AS RN,SEQ, ID, TITLE, CONTENT, REF, STEP, DEPTH, READCOUNT, DELFLAG, REGDATE, ISNOTICE, SELLBUY FROM BOARDTABLE
+		) 
+		WHERE CEIL(RN/5) = #{pnum}
+		ORDER BY REF DESC,STEP ASC
+	</select>
+	
+	<select id="pcount" resultType="int">
+		SELECT CEIL(COUNT(*)/5) FROM BOARDTABLE
+	</select>
 
 	<select id="boardlist" resultType="BoardDto" parameterType="Map">
 		<include refid="a"/>

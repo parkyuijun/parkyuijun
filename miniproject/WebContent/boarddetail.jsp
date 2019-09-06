@@ -55,7 +55,7 @@
 			<button onclick="replyForm()">답글</button>
 			<button onclick="updateForm(${dto.seq})">수정</button>
 			<button onclick="delBoard(${dto.seq})">삭제</button>
-			<button onclick="location.href='BoardController.do?command=boardlist'">글목록</button>
+			<button onclick="location.href='BoardController.do?command=boardlistpage'">글목록</button>
 		</td>
 	</tr>
 </table>
@@ -83,7 +83,7 @@
 		<td colspan="2">
 			<input type="submit" value="답글등록"/>
 			<input type="button" value="목록" 
-			          onclick="location.herf='BoardController.do?command=boardlist'"/>
+			          onclick="location.herf='BoardController.do?command=boardlistpage'"/>
 		</td>
 	</tr>
 </table>
