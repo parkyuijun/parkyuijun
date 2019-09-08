@@ -2,8 +2,8 @@ package com.hk.dtos;
 
 public class LoginDto {
 	
-	String tid;
 	
+	String tid;
 	String tpassword;
 	String tname;
 	String taddress;

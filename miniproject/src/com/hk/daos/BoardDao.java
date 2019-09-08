@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.hk.config.SqlMapConfig;
 import com.hk.dtos.BoardDto;
+import com.hk.dtos.LoginDto;
 
 
 public class BoardDao extends SqlMapConfig  {
@@ -53,6 +54,24 @@ public class BoardDao extends SqlMapConfig  {
 			}
 			return list;
 		}
+		
+		//글목록 조회(페이징처리): 파라미터가 필요(페이지번호) 내가쓴글만 보기
+		public List<BoardDto> getAllListPage2(String pnum){
+			List<BoardDto> list=new ArrayList<>();
+			SqlSession sqlSession=null;
+					
+			try {
+				SqlSessionFactory sqlSessionFactory=getSqlSessionFactory();
+				sqlSession=sqlSessionFactory.openSession(true);//autocommit->true
+				list=sqlSession.selectList(nameSpace+"boardlistpaging2",pnum);//list[hkdto,hkdto...]
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				sqlSession.close();
+			}
+			return list;
+		}
+				
 	//전체글보기(list를 반환)
 		public List<BoardDto> getAllList(){
 			List<BoardDto> list=new ArrayList<>();
@@ -175,5 +194,8 @@ public class BoardDao extends SqlMapConfig  {
 				sqlSession.close();
 			}
 			return dto;
-		}	
+		}
+		
+		
+		
 }

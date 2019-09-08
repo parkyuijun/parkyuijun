@@ -30,7 +30,7 @@ response.setDateHeader("Expires", 0L);
 	</div>
 	<ul>
 		<li><a href="LoginController.do?command=userinfo&tid=<%=ldto.getTid()%>">내 정보보기</a></li>
-		<li><a href="BoardController.do?command=boardlistpage&tid=<%=ldto.getTid()%>">내가 쓴 글 보기</a></li>
+		<li><a href="BoardController.do?command=boardlistpage2&pnum=1&tid=<%=ldto.getTid()%>">내가 쓴 글 보기</a></li>
 		<li><a href="BoardController.do?command=boardlistpage&pnum=1">전체 글 보기</a></li>
 	</ul>
 	<legend>의류</legend>

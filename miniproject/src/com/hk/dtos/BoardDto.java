@@ -3,6 +3,8 @@ package com.hk.dtos;
 import java.util.Date;
 
 public class BoardDto {
+	String pnum;
+	
 	int seq;
 	String id;
 	String title;
@@ -23,6 +25,15 @@ public class BoardDto {
 
 	
 	
+
+	public BoardDto(String pnum, String id) {
+		super();
+		this.pnum = pnum;
+		this.id = id;
+	}
+
+
+
 
 	public BoardDto(int seq, String id, String title, String content, int ref, int step, int depth, int readcount,
 			String delflag, Date regdate, String isnotice, String sellbuy) {
