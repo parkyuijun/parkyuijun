@@ -75,7 +75,7 @@
 	<col width="50px" />
 	<col width="50px" />
 	<tr>
-<!-- 		<th><input type="checkbox" name="all" onclick="allSel(this)"/></th> -->
+		<th><input type="checkbox" name="all" onclick="allSel(this)"/></th>
 		<th>번호</th>
 		<th>작성자</th>
 		<th>제 목</th>
@@ -91,7 +91,7 @@
 		<c:otherwise>
 			<c:forEach items="${list}" var="dto">
 				<tr>
-<%-- 					<td><input type="checkbox" name="chk" value="${dto.seq}"/></td> --%>
+					<td><input type="checkbox" name="chk" value="${dto.seq}"/></td>
 					<td>${dto.seq}</td>
 					<td>${dto.id}</td>
 					<c:choose>
@@ -125,7 +125,7 @@
 		</c:otherwise>
 	</c:choose>
 	<tr>
-					<td colspan="5" style="text-align: center;">
+					<td colspan="6" style="text-align: center;">
 						<% String myBoard=(String)session.getAttribute("myboard");
 							if(myBoard==null){
 								%>
@@ -162,7 +162,7 @@
 		<td colspan="10">
 			<input type="button" value="글추가" 
 			       onclick="location.href='BoardController.do?command=insertForm'"/>
-			  
+			<input type="submit" value="글삭제"/>       
 		</td>
 	</tr>
 </table>

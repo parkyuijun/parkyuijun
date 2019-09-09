@@ -29,7 +29,7 @@
 </head>
 <body>
 <%
- 	BoardDto dto1=(BoardDto)request.getAttribute("dto");
+// 	AnsDto dto1=(AnsDto)request.getAttribute("dto");
 %>
 <%
 	LoginDto ldto = (LoginDto)session.getAttribute("ldto");
@@ -57,15 +57,9 @@
 	<tr>
 		<td colspan="2">
 			<button onclick="replyForm()">답글</button>
+			<button onclick="updateForm(${dto.seq})">수정</button>
+			<button onclick="delBoard(${dto.seq})">삭제</button>
 			<%
-				String Tid = ldto.getTid();
-			String Trole = ldto.getTrole();
-			if(Tid.equals(dto1.getId())||Trole.equals("ADMIN")){
-				%>
-				<button onclick="updateForm(${dto.seq})">수정</button>
-				<button onclick="delBoard(${dto.seq})">삭제</button>
-				<%
-				}
 				String myboard=(String)session.getAttribute("myboard");
 				if(myboard==null){
 					%>
@@ -139,8 +133,8 @@
 	}
 	function delBoard(seq){
 		<%
-		
-		
+		String Trole = ldto.getTrole();
+		System.out.println("로그인된등급:"+Trole);
 		if(Trole.equals("admin")){
 			%>
 			location.href="BoardController.do?command=muldel&chk="+seq;

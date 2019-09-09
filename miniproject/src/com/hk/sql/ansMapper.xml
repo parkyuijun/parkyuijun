@@ -10,12 +10,18 @@
 		FROM BOARDTABLE 
 	</sql>
 	
-	<select id="boardlistpaging" resultType="BoardDto" parameterType="String">  
+	<select id="boardlistpaging" resultType="BoardDto" parameterType="Map" >  
 		SELECT RN,SEQ, ID, TITLE, CONTENT, REF, STEP, DEPTH, READCOUNT, DELFLAG, REGDATE, ISNOTICE, SELLBUY
 		FROM(
 		SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) AS RN,SEQ, ID, TITLE, CONTENT, REF, STEP, DEPTH, READCOUNT, DELFLAG, REGDATE, ISNOTICE, SELLBUY FROM BOARDTABLE
+		<if test="id!=null">
+			<where>			
+			 ID = #{id}			
+			</where>
+		</if>
 		) 
 		WHERE CEIL(RN/5) = #{pnum}
+		
 		ORDER BY REF DESC,STEP ASC
 	</select>
 	
@@ -24,12 +30,19 @@
 		FROM(
 		SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) AS RN,SEQ, ID, TITLE, CONTENT, REF, STEP, DEPTH, READCOUNT, DELFLAG, REGDATE, ISNOTICE, SELLBUY FROM BOARDTABLE
 		) 
-		WHERE CEIL(RN/5) = #{pnum} AND ID = #{id}
+		WHERE CEIL(RN/5) = #{pnum} 
+		<if test="tid!=null">
+			AND ID = #{id}			
+		</if>
 		ORDER BY REF DESC,STEP ASC
 	</select>
 	
 	<select id="pcount" resultType="int">
 		SELECT CEIL(COUNT(*)/5) FROM BOARDTABLE
+	</select>
+	
+	<select id="mypcount" resultType="int" parameterType="String">
+		SELECT CEIL(COUNT(*)/5) FROM BOARDTABLE WHERE ID=#{id}
 	</select>
 		
 	<select id="myboard" parameterType="String" resultType="BoardDto">
@@ -64,10 +77,13 @@
 	</update>
 	
 	<update id="muldel" parameterType="Map">
-		UPDATE BOARDTABLE SET DELFLAG='Y' WHERE SEQ IN 
+		UPDATE BOARDTABLE SET DELFLAG='Y' WHERE SEQ IN
 		<foreach collection="seqs" item="seq" open="(" close=")" separator=",">
 			#{seq}
 		</foreach>
+		<if test="id!=null">
+		AND ID=#{id}
+		</if>
 	</update>
 	
 	<update id="readcount" parameterType="int">

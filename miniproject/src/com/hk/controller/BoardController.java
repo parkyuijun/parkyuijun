@@ -42,7 +42,15 @@ public class BoardController extends HttpServlet {
 		if(command.equals("boardlistpage")) {
 			//요청 페이지 번호 받기
 			String pnum=request.getParameter("pnum");
+			String Trole=(String)((LoginDto)request.getSession().getAttribute("ldto")).getTrole();
 			request.getSession().removeAttribute("readcount");
+			
+			
+			//myboard
+			request.getSession().removeAttribute("myboard");
+			
+		
+			
 			//list: 요청페이지에 해당하는 글목록 가져오기
 			
 			//글목록을 요청할때 따로 pnum 파라미터를 전달하지 않아도 목록을 볼 수 있게 전에 담긴 pnum을 사용
@@ -60,7 +68,11 @@ public class BoardController extends HttpServlet {
 			
 			request.setAttribute("pmap", map);
 			request.setAttribute("list", list);
+			if(Trole.equals("ADMIN")) {
+			dispatch("adminboardlist.jsp", request, response);
+			}else {
 			dispatch("boardlist.jsp", request, response);
+			}
 		}else if(command.equals("boardlist")) {
 			//"readcount"값을 삭제한다. 
 			request.getSession().removeAttribute("readcount");
@@ -71,7 +83,7 @@ public class BoardController extends HttpServlet {
 			dispatch("boardlist.jsp", request, response);
 		}else if(command.equals("boarddetail")) {
 			int seq=Integer.parseInt(request.getParameter("seq"));
-			
+			String id=(String)((LoginDto)request.getSession().getAttribute("ldto")).getTid();
 			//세션에 "readcount"가 있는지 가져와 본다
 			String rSeq=(String)request.getSession().getAttribute("readcount");
 			
@@ -83,18 +95,25 @@ public class BoardController extends HttpServlet {
 			}
 			
 			
-			BoardDto dto=dao.getBoard(seq);
+			BoardDto dto=dao.getBoard(seq, id);
 			request.setAttribute("dto", dto);
 			dispatch("boarddetail.jsp", request, response);
-		}else if(command.equals("muldel")) {
+		}else if(command.equals("muldel")) {   //관리자 모두 삭제 가능
 			String [] seqs=request.getParameterValues("chk");
+			//myboard처리를 위한 값
+			String myboard=(String)request.getSession().getAttribute("myboard");
 			boolean isS=dao.mulDel(seqs);
 			if(isS) {
-				response.sendRedirect("BoardController.do?command=boardlistpage");
+				if(myboard==null) {
+					response.sendRedirect("BoardController.do?command=boardlistpage");					
+				}else {
+					response.sendRedirect("BoardController.do?command=boardlistpage2");	
+				}				
 			}else {
 				request.setAttribute("msg", "글여러개삭제실패");
 				dispatch("error.jsp", request, response);
 			}
+		
 		}else if(command.equals("insertForm")) {
 			response.sendRedirect("insertboard.jsp");
 		}else if(command.equals("insertboard")) {
@@ -102,17 +121,24 @@ public class BoardController extends HttpServlet {
 			String title=request.getParameter("title");
 			String content=request.getParameter("content");
 			
+			//myboard처리를 위한 값
+			String myboard=(String)request.getSession().getAttribute("myboard");
 			
 			boolean isS=dao.insertBoard(new BoardDto(id,title,content));
 			if(isS) {
-				response.sendRedirect("BoardController.do?command=boardlistpage");
+				if(myboard==null) {
+					response.sendRedirect("BoardController.do?command=boardlistpage");					
+				}else {
+					response.sendRedirect("BoardController.do?command=boardlistpage2");	
+				}
 			}else {
 				request.setAttribute("msg", "글추가실패");
 				dispatch("error.jsp", request, response);
 			}
 		}else if(command.equals("updateForm")) {
 			int seq=Integer.parseInt(request.getParameter("seq"));
-			BoardDto dto=dao.getBoard(seq);
+			String id=(String)((LoginDto)request.getSession().getAttribute("ldto")).getTid();
+			BoardDto dto=dao.getBoard(seq,id);
 			request.setAttribute("dto", dto);
 			dispatch("updateboard.jsp", request, response);
 		}else if(command.equals("updateboard")) {
@@ -143,8 +169,8 @@ public class BoardController extends HttpServlet {
 		}else if(command.equals("boardlistpage2")) {
 			//요청 페이지 번호 받기
 			String pnum=request.getParameter("pnum");
-			String id=request.getParameter("tid");
-			System.out.println(id);
+			String id=(String)((LoginDto)request.getSession().getAttribute("ldto")).getTid();
+			System.out.println("로그인된아이디:"+id);
 			request.getSession().removeAttribute("readcount");
 			//list: 요청페이지에 해당하는 글목록 가져오기
 			
@@ -156,15 +182,18 @@ public class BoardController extends HttpServlet {
 			}
 			
 			
-			List<BoardDto> list=dao.getAllListPage2(pnum);
+			List<BoardDto> list=dao.getAllListPage2(pnum,id);
 			//페이지의 개수를 구하기
-			int pcount=dao.getPcount();
+			int pcount=dao.getMyPcount(id);
 			
 			Map<String, Integer>map=Paging.pagingValue(pcount, pnum, 5);
 			
 			request.setAttribute("pmap", map);
 			request.setAttribute("list", list);
-			dispatch("boardlist.jsp", request, response);
+			//myboard처리
+			request.getSession().setAttribute("myboard", "myboard");
+			
+			dispatch("allboardlist.jsp", request, response);
 		}
 	}//doPost()종료
 	

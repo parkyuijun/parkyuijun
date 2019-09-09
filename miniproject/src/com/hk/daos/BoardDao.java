@@ -37,16 +37,32 @@ public class BoardDao extends SqlMapConfig  {
 			}
 			return pcount;
 		}
+		//내글보기에 대한 페이지 개수
+		public int getMyPcount(String id) {
+			SqlSession sqlSession=null;
+			int pcount=0;
+			
+			try {
+				sqlSession=getSqlSessionFactory().openSession(true);
+				pcount=sqlSession.selectOne(nameSpace+"mypcount",id);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				sqlSession.close();
+			}
+			return pcount;
+		}
 		
 		//글목록 조회(페이징처리): 파라미터가 필요(페이지번호)
 		public List<BoardDto> getAllListPage(String pnum){
 			List<BoardDto> list=new ArrayList<>();
 			SqlSession sqlSession=null;
-			
+			Map<String, String> map=new HashMap<String, String>();
+			map.put("pnum", pnum);
 			try {
 				SqlSessionFactory sqlSessionFactory=getSqlSessionFactory();
 				sqlSession=sqlSessionFactory.openSession(true);//autocommit->true
-				list=sqlSession.selectList(nameSpace+"boardlistpaging",pnum);//list[hkdto,hkdto...]
+				list=sqlSession.selectList(nameSpace+"boardlistpaging",map);//list[hkdto,hkdto...]
 			} catch (Exception e) {
 				e.printStackTrace();
 			}finally {
@@ -56,14 +72,16 @@ public class BoardDao extends SqlMapConfig  {
 		}
 		
 		//글목록 조회(페이징처리): 파라미터가 필요(페이지번호) 내가쓴글만 보기
-		public List<BoardDto> getAllListPage2(String pnum){
+		public List<BoardDto> getAllListPage2(String pnum, String tid){
 			List<BoardDto> list=new ArrayList<>();
 			SqlSession sqlSession=null;
-					
+			Map<String, String> map=new HashMap<String, String>();
+			map.put("pnum", pnum);
+			map.put("id", tid);
 			try {
 				SqlSessionFactory sqlSessionFactory=getSqlSessionFactory();
 				sqlSession=sqlSessionFactory.openSession(true);//autocommit->true
-				list=sqlSession.selectList(nameSpace+"boardlistpaging2",pnum);//list[hkdto,hkdto...]
+				list=sqlSession.selectList(nameSpace+"boardlistpaging",map);//list[hkdto,hkdto...]
 			} catch (Exception e) {
 				e.printStackTrace();
 			}finally {
@@ -103,11 +121,13 @@ public class BoardDao extends SqlMapConfig  {
 			return count>0?true:false;
 		}
 		//글상세보기(BoardDto반환)
-		public BoardDto getBoard(int seq){
+		public BoardDto getBoard(int seq, String id){
 			BoardDto dto=new BoardDto();
 			SqlSession sqlSession=null;
 			Map<String, Integer> map=new HashMap<>();
+			Map<String, String> map2=new HashMap<>();
 			map.put("seq", seq);
+			map2.put("id", id);
 			try {
 				sqlSession=getSqlSessionFactory().openSession(true);
 				dto=sqlSession.selectOne(nameSpace+"boardlist", map);
@@ -132,12 +152,13 @@ public class BoardDao extends SqlMapConfig  {
 			}
 			return count>0?true:false;
 		}
-		//글삭제하기(seq,여러글/글하나 삭제기능 같이사용)
+		//글삭제하기(seq,여러글/글하나 삭제기능 같이사용) 
 		public boolean mulDel(String[] seqs) {
 
 			int count=0;
 			Map<String, String[]>map=new HashMap<>();
 			map.put("seqs", seqs);
+			
 			SqlSession sqlSession=null;
 			try {
 				sqlSession=getSqlSessionFactory().openSession(true);
@@ -150,6 +171,7 @@ public class BoardDao extends SqlMapConfig  {
 			
 			return count>0?true:false;
 		}
+		
 		//조회수(seq)
 		public boolean readCount(int seq) {
 			int count=0;

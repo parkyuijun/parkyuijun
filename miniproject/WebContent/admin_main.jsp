@@ -31,6 +31,13 @@ response.setDateHeader("Expires", 0L);
 	<ul>
 		<li><a href="LoginController.do?command=alluserstatus">회원상태정보조회</a></li>
 		<li><a href="LoginController.do?command=alluserlist">회원정보목록조회</a></li>
+		<li><a href="BoardController.do?command=boardlistpage&pnum=1">전체 글 보기</a></li>
+		<legend>의류</legend>
+	<select name="selsite" onchange="selPage06()">
+		<option value="http://www.naver.com">상의</option>
+		<option value="http://www.daum.net">하의</option>
+		<option value="http://www.hankyung.com">신발</option>
+	</select>
 	</ul>
 	<%
 	}

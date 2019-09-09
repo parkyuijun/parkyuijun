@@ -68,7 +68,19 @@
 	<tr>
 		<td colspan="2">
 			<input type="submit" value="글등록"/>
-			<input type="button" value="목록" onclick="location.herf='BoardController.do?command=boardlist'"/>
+			<%
+				String myboard=(String)session.getAttribute("myboard");
+				if(myboard==null){
+					%>
+					<input type="button" value="목록" onclick="location.herf='BoardController.do?command=boardlistpage'"/>
+					<% 
+				}else{
+					%>
+					<input type="button" value="목록" onclick="location.herf='BoardController.do?command=boardlistpage2'"/>
+					<% 
+				}
+					%>
+			
 		</td>
 	</tr>
 </table>

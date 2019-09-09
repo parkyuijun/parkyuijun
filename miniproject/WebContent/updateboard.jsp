@@ -51,7 +51,19 @@ $(function(){
 	<tr>
 		<td colspan="2">
 			<input type="submit" value="수정완료"/>
-			<button type="button" onclick="location.href='BoardController.do?command=boardlist'">글목록</button>
+			<%
+				String myboard=(String)session.getAttribute("myboard");
+				if(myboard==null){
+					%>
+					<button type="button" onclick="location.href='BoardController.do?command=boardlistpage'">글목록</button>
+					<% 
+				}else{
+					%>
+					<button type="button" onclick="location.href='BoardController.do?command=boardlistpage2'">글목록</button>
+					<% 
+				}
+					%>
+			
 		</td>
 	</tr>
 </table>

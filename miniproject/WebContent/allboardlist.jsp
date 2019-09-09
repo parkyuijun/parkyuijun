@@ -14,12 +14,14 @@
 <script type="text/javascript">
 
 // 	function allSel(ele){
+// 		alert("gg");
 // 		var chks=document.getElementsByName("chk");
 // 		for(var i=0;i<chks.length;i++){
 // 			chks[i].checked=ele;
 // 		}
 // 	}
 	function allSel(ele){
+		alert("gg");
 // 		document.getElementsByTagName("input")[0].attr();
 		//js객체를 jq로 변환할때는  $(jsObj) 로 작성해주면 해결 
 // 		$(ele).attr("title","체크박스");
@@ -43,7 +45,7 @@
 			}
 			return bool;
 		});
-		
+	});
 
 </script>
 <style type="text/css">
@@ -75,7 +77,7 @@
 	<col width="50px" />
 	<col width="50px" />
 	<tr>
-<!-- 		<th><input type="checkbox" name="all" onclick="allSel(this)"/></th> -->
+		<th><input type="checkbox" name="all" id="all" onclick="allSel(this)"/></th>
 		<th>번호</th>
 		<th>작성자</th>
 		<th>제 목</th>
@@ -91,7 +93,7 @@
 		<c:otherwise>
 			<c:forEach items="${list}" var="dto">
 				<tr>
-<%-- 					<td><input type="checkbox" name="chk" value="${dto.seq}"/></td> --%>
+					<td><input type="checkbox" name="chk" value="${dto.seq}"/></td>
 					<td>${dto.seq}</td>
 					<td>${dto.id}</td>
 					<c:choose>
@@ -125,7 +127,7 @@
 		</c:otherwise>
 	</c:choose>
 	<tr>
-					<td colspan="5" style="text-align: center;">
+					<td colspan="6" style="text-align: center;">
 						<% String myBoard=(String)session.getAttribute("myboard");
 							if(myBoard==null){
 								%>
@@ -162,7 +164,7 @@
 		<td colspan="10">
 			<input type="button" value="글추가" 
 			       onclick="location.href='BoardController.do?command=insertForm'"/>
-			  
+			<input type="submit" value="글삭제"/>       
 		</td>
 	</tr>
 </table>
