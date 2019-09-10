@@ -33,13 +33,13 @@ response.setDateHeader("Expires", 0L);
 		<li><a href="BoardController.do?command=boardlistpage2&pnum=1">내가 쓴 글 보기</a></li>
 		<li><a href="BoardController.do?command=boardlistpage&pnum=1">전체 글 보기</a></li>
 	</ul>
-	<legend>의류</legend>
-	<select name="selsite" onchange="selPage06()">
-		<option value=#>---</option>
-		<option value="http://www.naver.com">상의</option>
-		<option value="http://www.daum.net">하의</option>
-		<option value="http://www.hankyung.com">신발</option>
-	</select>
+<!-- 	<legend>의류</legend> -->
+<!-- 	<select name="selsite" onchange="selPage06()"> -->
+<!-- 		<option value=#>---</option> -->
+<!-- 		<option value="http://www.naver.com">상의</option> -->
+<!-- 		<option value="http://www.daum.net">하의</option> -->
+<!-- 		<option value="http://www.hankyung.com">신발</option> -->
+<!-- 	</select> -->
 	<%
 	}
 %>

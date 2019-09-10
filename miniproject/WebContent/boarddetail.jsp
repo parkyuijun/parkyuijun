@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
 <%response.setContentType("text/html; charset=UTF-8"); %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,8 @@
 		border: 1px solid red;
 		overflow: auto;
 	}
+	
+	.hk{width: 680px; height:400px; vertical-align: top;}
 
 </style>
 <script type="text/javascript">
@@ -30,8 +33,6 @@
 <body>
 <%
  	BoardDto dto1=(BoardDto)request.getAttribute("dto");
-%>
-<%
 	LoginDto ldto = (LoginDto)session.getAttribute("ldto");
 %>
 <jsp:include page="header.jsp"  />
@@ -52,7 +53,7 @@
 	</tr>
 	<tr>
 		<th>내용</th>
-		<td><textarea rows="10" cols="60" readonly="readonly">${dto.content}</textarea> </td>
+		<td class="hk">${dto.content}</td>
 	</tr>
 	<tr>
 		<td colspan="2">
