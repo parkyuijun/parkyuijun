@@ -29,7 +29,7 @@ response.setDateHeader("Expires", 0L);
 		<a href="LoginController.do?command=logout">로그아웃</a>
 	</div>
 	<ul>
-		<li><a href="LoginController.do?command=userinfo&tid=<%=ldto.getTid()%>">내 정보보기</a></li>
+		<li><a href="LoginController.do?command=userinfo&tid=<%=ldto.getTid()%>">MY PAGE</a></li>
 		<li><a href="BoardController.do?command=boardlistpage2&pnum=1">내가 쓴 글 보기</a></li>
 		<li><a href="BoardController.do?command=boardlistpage&pnum=1">전체 글 보기</a></li>
 	</ul>
