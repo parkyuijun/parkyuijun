@@ -66,6 +66,11 @@
 	}	
 	.sign2:hover{
 		color:red;
+		}
+	div{
+	  text-align: center;
+	  margin-bottom: 10px;
+	}	
 </style>
 <title>내 정보보기</title>
 </head>
