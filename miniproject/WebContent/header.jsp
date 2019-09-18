@@ -50,6 +50,6 @@
 		<%
 	}
 %>
-<hr style="border: solid 1px #a9a9a9;">
+
 </body>
 </html>

@@ -80,10 +80,13 @@ ul li {
    position: relative;
 }
 .list-table {
+	
    margin-top: 40px;
 }
 .list-table thead th{
    height:40px;
+   border-right: 1px solid #ccc;
+	 
    border-top:2px solid #09C;
    border-bottom:1px solid #CCC;
    font-weight: bold;
@@ -92,6 +95,8 @@ ul li {
 .list-table tbody td{
    text-align:center;
    padding:10px 0;
+    
+    border-right: 1px solid #ccc;
    border-bottom:1px solid #CCC; height:20px;
    font-size: 14px 
 }

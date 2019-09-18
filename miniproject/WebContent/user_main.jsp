@@ -12,27 +12,93 @@ response.setDateHeader("Expires", 0L);
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Gugi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Hi+Melody&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap" rel="stylesheet">
+<style type="text/css">
+	.sign{
+	font-family: 'Sunflower', sans-serif;
+	  font-size: 20px;
+		color: #808080;
+		background: white;
+		padding: 5px 10px;
+	  border-radius: 5px;
+	}	
+ a {
+ font-family: 'Sunflower', sans-serif;
+  text-decoration: none; color: white;
+   }
+
+.member{
+	text-align:center;
+		font-family: 'Sunflower', sans-serif;
+	  font-size: 40px;
+	  color: #138535;
+	}
+	.l {
+	 margin-top: 10px;
+	 margin-bottom: 10px;
+		  text-align: left;
+		  font-size: 15px;
+		  color: yellow;
+    list-style: none;
+    border-radius: 5px;
+	}
+	.l:hover{
+		color:red;
+		}
+		
+	#menu1{
+		background:#138535;
+	}	
+	#menu1 ul{
+		width:500px;
+		margin:0 auto;
+		overflow:hidden;
+	}	
+	#menu1 ul li{
+		float:left;
+		width:25%;
+		height:100%;
+		text-align:center;
+		background:#138535;
+	
+		
+	}	
+	#menu1 ul li a{
+		display:block;
+	}
+	#menu1 ul li a:hover{
+
+		background: #98E0AD;
+		color:yellow;
+	}
+</style>
 <title>사용자페이지</title>
 </head>
 <body>
 <%
 	LoginDto ldto = (LoginDto)session.getAttribute("ldto");
 %>
-<h1>메인 메뉴</h1>
+<h1 class="member">중&nbsp;&nbsp;고&nbsp;&nbsp;나&nbsp;&nbsp;라</h1>
 <%
 	if(ldto==null){
 		response.sendRedirect("index.jsp");
 	}else{
 	%>
-	<div>
-		<%=ldto.getTid()%>님 반갑습니다.(등급 : <%=ldto.getTrole().equals("USER") ? "일반회원" : "정회원"%>)
-		<a href="LoginController.do?command=logout">로그아웃</a>
-	</div>
+	<div  class="sign" >
+		&nbsp; ID:<%=ldto.getTid()%>&nbsp; &nbsp;(등급 : <%=ldto.getTrole().equals("USER") ? "일반회원" : "정회원"%>)
+	</div><br>
+	<div id="menu1">
 	<ul>
-		<li><a href="LoginController.do?command=userinfo&tid=<%=ldto.getTid()%>">MY PAGE</a></li>
-		<li><a href="BoardController.do?command=boardlistpage2&pnum=1">내가 쓴 글 보기</a></li>
-		<li><a href="BoardController.do?command=boardlistpage&pnum=1">전체 글 보기</a></li>
+		<li class="l" ><a href="LoginController.do?command=userinfo&tid=<%=ldto.getTid()%>" style="text-decoration:none">MY PAGE</a></li>
+		<li class="l"><a href="BoardController.do?command=boardlistpage2&pnum=1"  style="text-decoration:none">내가 쓴 글 보기</a></li>
+		<li class="l"><a href="BoardController.do?command=boardlistpage&pnum=1"  style="text-decoration:none">전체 글 보기</a></li>
+		<li class="l"><a href="LoginController.do?command=logout" style="text-decoration:none">로그아웃</a></li>
 	</ul>
+	</div>
 <!-- 	<legend>의류</legend> -->
 <!-- 	<select name="selsite" onchange="selPage06()"> -->
 <!-- 		<option value=#>---</option> -->

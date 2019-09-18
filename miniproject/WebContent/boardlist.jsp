@@ -47,6 +47,7 @@ ul li {
 }
 .list-table thead th{
    height:40px;
+    border-right: 1px solid #ccc;
    border-top:2px solid #09C;
    border-bottom:1px solid #CCC;
    font-weight: bold;
@@ -54,6 +55,7 @@ ul li {
 }
 .list-table tbody td{
    text-align:center;
+   border-right: 1px solid #ccc;
    padding:10px 0;
    border-bottom:1px solid #CCC; height:20px;
    font-size: 14px 
@@ -155,7 +157,7 @@ ul li {
                      <td>-----삭제된 글입니다.-----</td>
                   </c:when>
                   <c:otherwise>
-                     <td>
+                     <td style="text-align: left;">
 <!--                         AnsDto dto=new AnsDto(); -->
 <!--                         dto.setSeq(5) -->
 <!--                         dto.getSeq() -->

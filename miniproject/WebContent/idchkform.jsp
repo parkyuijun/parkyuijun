@@ -28,6 +28,35 @@
 		self.close(); //현재창을 닫는다
 	}
 </script>
+<style type="text/css">
+	table.type03 {
+	    border-collapse: collapse;
+	    
+	    text-align: left;
+	    line-height: 1.5;
+	    border-top: 1px solid #ccc;
+	    border-left: 3px solid #138535;
+	  margin : 20px 10px;
+	  
+	}
+	table.type03 th {
+	    width: 147px;
+	    padding: 10px;
+	    font-weight: bold;
+	    vertical-align: top;
+	    color: #138535;
+	    border-right: 1px solid #ccc;
+	    border-bottom: 1px solid #ccc;
+	
+	}
+	table.type03 td {
+	    width: 349px;
+	    padding: 10px;
+	    vertical-align: top;
+	    border-right: 1px solid #ccc;
+	    border-bottom: 1px solid #ccc;
+	}
+</style>
 </head>
 <body>
 <%
@@ -37,7 +66,7 @@
 		isS = true;
 	}
 %>
-<table border="1">
+<table class="type03" style="margin-left: auto; margin-right: auto;">
 	<tr>
 		<td><input type="text" name="tid" /></td>
 	</tr>
