@@ -82,8 +82,14 @@
                    <%    
             }
          %>
-            <button onclick="location.href='BoardController.do?command=sellbuy'" style="float: right;">판매완료</button>
-      </td>
+        <%
+         if(Tid.equals(dto1.getId())||Trole.equals("ADMIN")){
+       	%>
+            <button onclick="location.href='BoardController.do?command=sellbuy&seq=${dto.seq}'" style="float: right;">판매완료</button>
+        <% 
+        }
+        %>
+        </td>
    </tr>
 </table>
 <div id="replyForm">
