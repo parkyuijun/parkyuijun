@@ -44,7 +44,7 @@
 		$("form").submit(function(){
 			var bool=true;
 			//[input,input,textarea]
-			var inputs=$(this).find("td").children().filter("[name]");
+			var inputs=$(this).find("#elel").children().filter("[name]");
 			inputs.each(function(){
 				if($(this).val()==""){
 					alert($(this).parent().prev().text()+"를 입력하세요");
@@ -107,19 +107,19 @@
 	</tr>
 	<tr>
 		<th>제목</th>
-		<td><input type="text" name="title" class="inputval"/></td>
+		<td id="elel"><input type="text" name="title" class="inputval"/></td>
 	</tr>
 	<tr>
       <td colspan="2"><input type="file" name="fileup" id="status"></td>
    </tr>
    <tr>
       <th>이미지</th>
-      <td id="holder"></td>
+      <td id="holder"> </td>
    <tr>
 	<!-- 상품이미지 추가해야함 !! -->
 	<tr>
 		<th>내용</th>
-		<td ><textarea name="content" id="content" rows="20" cols="100" ></textarea></td>
+		<td id="elel"><textarea name="content" id="content" rows="20" cols="100" ></textarea></td>
 	</tr>
 	<tr>
 		<td colspan="2">

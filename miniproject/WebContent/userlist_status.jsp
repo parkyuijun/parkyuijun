@@ -1,6 +1,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
-<%@include file="header.jsp" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
 <%response.setContentType("text/html; charset=UTF-8"); %>
@@ -9,11 +9,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Gugi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Hi+Melody&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Monda&display=swap" rel="stylesheet">
 <style type="text/css">
 
 
 /* 전체 옵션 */
-
+.sign{
+	font-family: 'Hi Melody', cursive;
+	  font-size: 20px;
+		color: black;
+		background: white;
+		padding: 5px 10px;
+	  border-radius: 5px;
+	}	
+	.sign:hover{
+		color:red;
+	}
 h1 {text-align: center;}
 
 * {
@@ -43,20 +57,33 @@ h1 {text-align: center;}
    border-bottom:1px solid #CCC; height:20px;
    font-size: 14px 
 }
-
+.main{
+		  margin-top: 10px;
+		  text-align: left;
+		  font-size: 15px;
+		  color: black;
+		  background: white;
+		   margin: opx;
+		   border-radius: 5px;
+/* 		  padding: 10px 0px 10px 0px; */
+		}
 </style>
 <meta charset="UTF-8">
 <title></title>
 </head>
 
 <body>
+<div class="main">
+			<a href="admin_main.jsp" class="sign" style="text-decoration:none">MAIN</a>
+			<a href="LoginController.do?command=logout" class="sign" style="text-decoration:none">LOGOUT</a>
+		</div>
 <div id="board_area">
 <h1>회원정보 상태조회</h1>
 <table class="list-table">
    
    <col width="100px" />
-   <col width="50px" />
-   <col width="150px" />
+   <col width="80px" />
+   <col width="500px" />
    <col width="150px" />
    <col width="200px" />
    <col width="100px" />

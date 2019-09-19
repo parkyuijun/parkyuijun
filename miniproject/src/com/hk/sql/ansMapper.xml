@@ -64,7 +64,7 @@
 		<include refid="a"/>
 		WHERE SEQ=#{seq}
 	</select>
-	
+		
 	<select id="fileboard" parameterType="int">
 		SELECT FILEUP FROM BOARDTABLE WHERE SEQ=#{SEQ}
 	</select>
@@ -73,7 +73,7 @@
 	<insert id="insertboard" parameterType="BoardDto">
 		INSERT INTO BOARDTABLE (SEQ,ID,TITLE,CONTENT,REF,STEP,DEPTH,READCOUNT,DELFLAG,REGDATE,ISNOTICE,SELLBUY,FILEUP ) 
 		VALUES(BOARDTABLE_SEQ.NEXTVAL,#{id},#{title},#{content}, 
-		(SELECT NVL(MAX(REF)+1,0) FROM BOARDTABLE ),0,0,0,'N',SYSDATE,'N','미판매',#{fileup})
+		(SELECT NVL(MAX(REF)+1,0) FROM BOARDTABLE ),0,0,0,'N',SYSDATE,'N','미판매', #{fileup})
 	</insert>
 	
 	<update id="updateboard" parameterType="BoardDto">

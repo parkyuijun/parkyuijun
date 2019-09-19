@@ -70,8 +70,13 @@ public class BoardController extends HttpServlet {
 			
 			//2.저장할 파일명 구함(UUID ----> 32자리 랜덤값을 구함)
 			//32자리+".png"     name.png
-			String stored_fname=createUUId()
-					         +(origin_fname.substring(origin_fname.lastIndexOf(".")));
+			
+			String stored_fname = "";
+			if(origin_fname != null) {
+				stored_fname=createUUId()
+				         +(origin_fname.substring(origin_fname.lastIndexOf(".")));
+			}
+			
 			
 			//게시판테이블에 id,title,content,stored_name 을 추가해주는 코드 작성
 			boolean isS=dao.insertBoard(new BoardDto(id,title,content,stored_fname));
