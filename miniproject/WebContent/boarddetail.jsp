@@ -27,7 +27,7 @@
 
 </style>
 <script type="text/javascript">
-   
+  
 </script>
 </head>
 <body>
@@ -51,7 +51,9 @@
       <th>제목</th>
       <td>${dto.title}</td>
    </tr>
-  
+   <tr>
+   	  <th>이미지</th>
+   	  <td><img src="upload/${dto.fileup}"></td>  	 
    <tr>
       <th>내용</th>
       
@@ -80,7 +82,7 @@
                    <%    
             }
          %>
-            
+            <button onclick="location.href='BoardController.do?command=sellbuy'" style="float: right;">판매완료</button>
       </td>
    </tr>
 </table>

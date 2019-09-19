@@ -98,7 +98,6 @@
 <body>
 <h1>게시글 추가하기</h1>
 <form action="BoardController.do" method="post" enctype="multipart/form-data" >
-<!-- <input type="hidden" name="command" value="insertboard"/> -->
 <input type="hidden" name="id" value="${sessionScope.ldto.tid}"/>
 <table border="1">
 	
@@ -132,7 +131,7 @@
 					<% 
 				}else{
 					%>
-					<input type="button" value="목록" onclick="location.herf='BoardController.do?command=boardlistpage2'"/>
+					<input type="button" value="목록" onclick="location.href='BoardController.do?command=boardlistpage2'"/>
 					<% 
 				}
 					%>

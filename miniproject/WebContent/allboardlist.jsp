@@ -130,6 +130,7 @@ img{width: 12px; height: 12px;}
    <col width="500px" />
    <col width="150px" />
    <col width="100px" />
+   <col width="150px" />
    <thead>
    <tr>
       <th><input type="checkbox" name="all" id="all" onclick="allSel(this)"/></th>
@@ -138,6 +139,7 @@ img{width: 12px; height: 12px;}
       <th>제 목</th>
       <th>작성일</th>
       <th>조회수</th>
+      <th>판매여부</th>
    </tr>
    </thead>
    <tbody>
@@ -158,7 +160,7 @@ img{width: 12px; height: 12px;}
                      <td>-----삭제된 글입니다.-----</td>
                   </c:when>
                   <c:otherwise>
-                     <td>
+                     <td style="text-align: left;">
 <!--                         AnsDto dto=new AnsDto(); -->
 <!--                         dto.setSeq(5) -->
 <!--                         dto.getSeq() -->
@@ -179,12 +181,13 @@ img{width: 12px; height: 12px;}
                </c:choose>
                <td><fmt:formatDate value="${dto.regdate}" pattern="yyyy년MM월dd일"/> </td>
                <td>${dto.readcount}</td>
+               <td>${dto.sellbuy}</td>
             </tr>
          </c:forEach>
       </c:otherwise>
    </c:choose>
    <tr>
-               <td colspan="6" style="text-align: center;">
+               <td colspan="7" style="text-align: center;">
                   <% String myBoard=(String)session.getAttribute("myboard");
                      if(myBoard==null){
                         %>
@@ -217,6 +220,7 @@ img{width: 12px; height: 12px;}
                   %>   
                </td>
             </tr>
+            
             </tbody>
                  
 </table>

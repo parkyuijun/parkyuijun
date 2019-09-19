@@ -65,10 +65,15 @@
 		WHERE SEQ=#{seq}
 	</select>
 	
+	<select id="fileboard" parameterType="int">
+		SELECT FILEUP FROM BOARDTABLE WHERE SEQ=#{SEQ}
+	</select>
+		
+	
 	<insert id="insertboard" parameterType="BoardDto">
 		INSERT INTO BOARDTABLE (SEQ,ID,TITLE,CONTENT,REF,STEP,DEPTH,READCOUNT,DELFLAG,REGDATE,ISNOTICE,SELLBUY,FILEUP ) 
 		VALUES(BOARDTABLE_SEQ.NEXTVAL,#{id},#{title},#{content}, 
-		(SELECT NVL(MAX(REF)+1,0) FROM BOARDTABLE ),0,0,0,'N',SYSDATE,'N','Y',#{fileup})
+		(SELECT NVL(MAX(REF)+1,0) FROM BOARDTABLE ),0,0,0,'N',SYSDATE,'N','미판매',#{fileup})
 	</insert>
 	
 	<update id="updateboard" parameterType="BoardDto">
@@ -105,14 +110,17 @@
 		VALUES(BOARDTABLE_SEQ.NEXTVAL,#{id},#{title},#{content},
 		(SELECT REF FROM BOARDTABLE WHERE SEQ=#{seq}), 
 		(SELECT STEP FROM BOARDTABLE WHERE SEQ=#{seq})+1, 
-		(SELECT DEPTH FROM BOARDTABLE WHERE SEQ=#{seq})+1,0,'N',SYSDATE,'N','Y')
+		(SELECT DEPTH FROM BOARDTABLE WHERE SEQ=#{seq})+1,0,'N',SYSDATE,'N','Y',FILEUP=#{fileup})
 	</insert>
 	
 	<select id="contentAjax" parameterType="int" resultType="BoardDto">
 		SELECT CONTENT FROM BOARDTABLE WHERE SEQ=#{seq}
 	</select>
 	
-	
+	<update id="sellbuy" parameterType="int">
+		UPDATE BOARDTABLE SET SELLBUY='판매완료'
+		WHERE SEQ=#{seq} 
+	</update>
 	
 </mapper>
 

@@ -218,6 +218,21 @@ public class BoardDao extends SqlMapConfig  {
 			return dto;
 		}
 		
+		public boolean updateSellbuy(int seq) {
+			
+			int count=0;
+			SqlSession sqlSession=null;
+			try {
+				sqlSession=getSqlSessionFactory().openSession(true);
+				count=sqlSession.update(nameSpace+"sellbuy", seq);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				sqlSession.close();
+			}
+			return count>0?true:false;
+		}
+		
 		
 		
 }

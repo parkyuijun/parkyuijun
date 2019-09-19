@@ -38,10 +38,9 @@ public class BoardController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 		
 		String command=request.getParameter("command");
-		
 		BoardDao dao=new BoardDao();
 		if(command==null||command.equals("")) { //업로드 요청 (multipart로 요청)
 			System.out.println("들어왔다 !!!!");
@@ -75,7 +74,7 @@ public class BoardController extends HttpServlet {
 					         +(origin_fname.substring(origin_fname.lastIndexOf(".")));
 			
 			//게시판테이블에 id,title,content,stored_name 을 추가해주는 코드 작성
-			dao.insertBoard(new BoardDto(id,title,content,stored_fname));
+			boolean isS=dao.insertBoard(new BoardDto(id,title,content,stored_fname));
 			
 			
 			//3.파일의 사이즈 구하기: length(): long타입으로 반환(형변환이 필요)
@@ -93,7 +92,7 @@ public class BoardController extends HttpServlet {
 			File newFile=new File(saveDirectory+"/"+stored_fname);
 			oldFile.renameTo(newFile);//old----> new 로 파일명이 바뀜
 			String myboard=(String)request.getSession().getAttribute("myboard");
-			boolean isS=dao.insertBoard(new BoardDto(id,title,content,stored_fname));
+			
 			if(isS) {
 				if(myboard==null) {
 					response.sendRedirect("BoardController.do?command=boardlistpage");					
@@ -152,6 +151,8 @@ public class BoardController extends HttpServlet {
 			//세션에 "readcount"가 있는지 가져와 본다
 			String rSeq=(String)request.getSession().getAttribute("readcount");
 			
+		
+			
 			if(rSeq==null) {
 				//조회수 올리기
 				dao.readCount(seq);
@@ -181,26 +182,26 @@ public class BoardController extends HttpServlet {
 		
 		}else if(command.equals("insertForm")) {
 			response.sendRedirect("insertboard.jsp");
-		}else if(command.equals("insertboard")) {
-			String id=request.getParameter("id");
-			String title=request.getParameter("title");
-			String content=request.getParameter("content");
-			String fileup=request.getParameter("fileup");
-			
-			//myboard처리를 위한 값
-			String myboard=(String)request.getSession().getAttribute("myboard");
-			
-			boolean isS=dao.insertBoard(new BoardDto(id,title,content,fileup));
-			if(isS) {
-				if(myboard==null) {
-					response.sendRedirect("BoardController.do?command=boardlistpage");					
-				}else {
-					response.sendRedirect("BoardController.do?command=boardlistpage2");	
-				}
-			}else {
-				request.setAttribute("msg", "글추가실패");
-				dispatch("error.jsp", request, response);
-			}
+//		}else if(command.equals("insertboard")) {
+//			String id=request.getParameter("id");
+//			String title=request.getParameter("title");
+//			String content=request.getParameter("content");
+//			String fileup=request.getParameter("fileup");
+//			
+//			//myboard처리를 위한 값
+//			String myboard=(String)request.getSession().getAttribute("myboard");
+//			
+//			boolean isS=dao.insertBoard(new BoardDto(id,title,content,fileup));
+//			if(isS) {
+//				if(myboard==null) {
+//					response.sendRedirect("BoardController.do?command=boardlistpage");					
+//				}else {
+//					response.sendRedirect("BoardController.do?command=boardlistpage2");	
+//				}
+//			}else {
+//				request.setAttribute("msg", "글추가실패");
+//				dispatch("error.jsp", request, response);
+//			}
 		}else if(command.equals("updateForm")) {
 			int seq=Integer.parseInt(request.getParameter("seq"));
 			String id=(String)((LoginDto)request.getSession().getAttribute("ldto")).getTid();
@@ -260,6 +261,24 @@ public class BoardController extends HttpServlet {
 			request.getSession().setAttribute("myboard", "myboard");
 			
 			dispatch("allboardlist.jsp", request, response);
+		}else if(command.equals("sellbuy")) {
+			
+			
+			String myboard=(String)request.getSession().getAttribute("myboard");			
+			int seq=Integer.parseInt(request.getParameter("seq"));
+			System.out.println("젭말들어가");
+			boolean isS=dao.updateSellbuy(seq);
+			
+			if(isS) {
+				if(myboard==null) {
+					response.sendRedirect("BoardController.do?command=boardlistpage");					
+				}else {
+					response.sendRedirect("BoardController.do?command=boardlistpage2");	
+				}
+			}else {
+				request.setAttribute("msg", "에러 sellbuy버튼");
+				dispatch("error.jsp", request, response);
+			}
 		}
 	}//doPost()종료
 	
