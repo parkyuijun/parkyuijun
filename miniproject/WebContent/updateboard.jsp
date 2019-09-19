@@ -56,6 +56,10 @@ $(function(){
 		<td><input type="text" name="title" value="${dto.title}"/></td>
 	</tr>
 	<tr>
+		<th>이미지</th>
+		<td><img name="fileup" alt="" src="upload/${dto.fileup}"></td>
+	</tr>
+	<tr>
 		<th>내용</th>
 <%-- 		<td><textarea rows="10" cols="60" name="content">${dto.content}</textarea> </td> --%>
 		<td><textarea name="content" id="content" rows="10" cols="100" title="HTML 편집 모드" class="se2_input_syntax se2_input_htmlsrc" style="display:none;outline-style:none;resize:none">

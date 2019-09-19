@@ -51,10 +51,7 @@
       <th>제목</th>
       <td>${dto.title}</td>
    </tr>
-   <tr>
-      <th>이미지</th>
-   
-   </tr>
+  
    <tr>
       <th>내용</th>
       

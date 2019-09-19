@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class BoardDto {
 	String pnum;
-	
 	int seq;
 	String id;
 	String title;
@@ -17,6 +16,7 @@ public class BoardDto {
 	Date regdate;
 	String isnotice;
 	String sellbuy;
+	String fileup;
 	
 	public BoardDto() {
 		super();
@@ -32,11 +32,8 @@ public class BoardDto {
 		this.id = id;
 	}
 
-
-
-
 	public BoardDto(int seq, String id, String title, String content, int ref, int step, int depth, int readcount,
-			String delflag, Date regdate, String isnotice, String sellbuy) {
+			String delflag, Date regdate, String isnotice, String sellbuy, String fileup) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -50,16 +47,18 @@ public class BoardDto {
 		this.regdate = regdate;
 		this.isnotice = isnotice;
 		this.sellbuy = sellbuy;
+		this.fileup = fileup;
 	}
 
 
 
 
-	public BoardDto(String id, String title, String content) {
+	public BoardDto(String id, String title, String content, String fileup) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.content = content;
+		this.fileup = fileup;
 	}
 
 	
@@ -249,16 +248,35 @@ public class BoardDto {
 		this.sellbuy = sellbuy;
 	}
 
+	
+
+
+	public String getFileup() {
+		return fileup;
+	}
+
+
+
+
+	public void setFileup(String fileup) {
+		this.fileup = fileup;
+	}
+
 
 
 
 	@Override
 	public String toString() {
-		return "BoardDto [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", ref=" + ref
-				+ ", step=" + step + ", depth=" + depth + ", readcount=" + readcount + ", delflag=" + delflag
-				+ ", regdate=" + regdate + ", isnotice=" + isnotice + ", sellbuy=" + sellbuy + "]";
+		return "BoardDto [pnum=" + pnum + ", seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content
+				+ ", ref=" + ref + ", step=" + step + ", depth=" + depth + ", readcount=" + readcount + ", delflag="
+				+ delflag + ", regdate=" + regdate + ", isnotice=" + isnotice + ", sellbuy=" + sellbuy + ", fileup="
+				+ fileup + "]";
 	}
 
+	
+
+
+	
 	
 	
 	

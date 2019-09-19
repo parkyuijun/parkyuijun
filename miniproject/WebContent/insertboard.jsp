@@ -57,7 +57,7 @@
 		});
 		
 		 //사진 첨부 파일   
-      var upload = document.getElementsByTagName('input')[3],
+      var upload = document.getElementsByTagName('input')[2],
        holder = document.getElementById('holder'),
        state = document.getElementById('status');
 
@@ -97,8 +97,8 @@
 </head>
 <body>
 <h1>게시글 추가하기</h1>
-<form action="BoardController.do" method="post" >
-<input type="hidden" name="command" value="insertboard"/>
+<form action="BoardController.do" method="post" enctype="multipart/form-data" >
+<!-- <input type="hidden" name="command" value="insertboard"/> -->
 <input type="hidden" name="id" value="${sessionScope.ldto.tid}"/>
 <table border="1">
 	
@@ -111,7 +111,7 @@
 		<td><input type="text" name="title" class="inputval"/></td>
 	</tr>
 	<tr>
-      <td colspan="2"><input type="file" id="status"></td>
+      <td colspan="2"><input type="file" name="fileup" id="status"></td>
    </tr>
    <tr>
       <th>이미지</th>
@@ -120,7 +120,7 @@
 	<!-- 상품이미지 추가해야함 !! -->
 	<tr>
 		<th>내용</th>
-		<td><textarea name="content" id="content" rows="20" cols="100" ></textarea></td>
+		<td ><textarea name="content" id="content" rows="20" cols="100" ></textarea></td>
 	</tr>
 	<tr>
 		<td colspan="2">

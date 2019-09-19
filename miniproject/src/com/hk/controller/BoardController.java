@@ -1,8 +1,10 @@
 package com.hk.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +15,11 @@ import javax.servlet.http.HttpSession;
 
 import com.hk.daos.BoardDao;
 import com.hk.dtos.BoardDto;
+
 import com.hk.dtos.LoginDto;
 import com.hk.utils.Paging;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
 
@@ -38,8 +43,68 @@ public class BoardController extends HttpServlet {
 		String command=request.getParameter("command");
 		
 		BoardDao dao=new BoardDao();
-		
-		if(command.equals("boardlistpage")) {
+		if(command==null||command.equals("")) { //업로드 요청 (multipart로 요청)
+			System.out.println("들어왔다 !!!!");
+			MultipartRequest multi=null;
+			//파일저장경로
+			//상대경로
+//			String saveDirectory2=request.getSession().getServletContext().getRealPath("upload");
+//			System.out.println("상대경로:"+saveDirectory2);
+			String saveDirectory="C:/Users/HKEDU/git/parkyuijun/miniproject/WebContent/upload";
+			
+			//파일사이즈 설정(한번에 업로드할때 최대 사이즈)
+			int maxPostSize=10*1024*1024;//10MB를 byte단위로 환산
+			//파일업로드 실행
+			multi=new MultipartRequest(request, saveDirectory, maxPostSize,"utf-8",
+					  new DefaultFileRenamePolicy());
+			
+			String id=multi.getParameter("id");
+			String title=multi.getParameter("title");
+			String content=multi.getParameter("content");
+			String fileup=multi.getParameter("fileup");
+			System.out.println("글제목:"+fileup);
+			
+			//파일의 정보를 DB에 저장하는 작업
+			
+			//1.원본파일명 구함
+			String origin_fname=multi.getOriginalFileName("fileup");
+			
+			//2.저장할 파일명 구함(UUID ----> 32자리 랜덤값을 구함)
+			//32자리+".png"     name.png
+			String stored_fname=createUUId()
+					         +(origin_fname.substring(origin_fname.lastIndexOf(".")));
+			
+			//게시판테이블에 id,title,content,stored_name 을 추가해주는 코드 작성
+			dao.insertBoard(new BoardDto(id,title,content,stored_fname));
+			
+			
+			//3.파일의 사이즈 구하기: length(): long타입으로 반환(형변환이 필요)
+//			int file_size=(int)multi.getFile("filename").length();
+			
+			//4.DB에 정보 저장하기
+//			boolean isS=dao.insertFileInfo(
+//					new FileDto(0,origin_fname,stored_fname,file_size,null,null));
+			
+			//getOriginFileName():원본파일명
+			//getFilesystemName():실제로 저장된 파일명
+			
+			//policy객체는 중복되는 파일명을 재정의하는 기능 구현 --> aa.png 같은 파일명이면 aa1.png
+			File oldFile=new File(saveDirectory+"/"+multi.getFilesystemName("fileup"));
+			File newFile=new File(saveDirectory+"/"+stored_fname);
+			oldFile.renameTo(newFile);//old----> new 로 파일명이 바뀜
+			String myboard=(String)request.getSession().getAttribute("myboard");
+			boolean isS=dao.insertBoard(new BoardDto(id,title,content,stored_fname));
+			if(isS) {
+				if(myboard==null) {
+					response.sendRedirect("BoardController.do?command=boardlistpage");					
+				}else {
+					response.sendRedirect("BoardController.do?command=boardlistpage2");	
+				}
+			}else {
+				request.setAttribute("msg", "글추가실패");
+				dispatch("error.jsp", request, response);
+			}
+		}else if(command.equals("boardlistpage")) {
 			//요청 페이지 번호 받기
 			String pnum=request.getParameter("pnum");
 			String Trole=(String)((LoginDto)request.getSession().getAttribute("ldto")).getTrole();
@@ -120,11 +185,12 @@ public class BoardController extends HttpServlet {
 			String id=request.getParameter("id");
 			String title=request.getParameter("title");
 			String content=request.getParameter("content");
+			String fileup=request.getParameter("fileup");
 			
 			//myboard처리를 위한 값
 			String myboard=(String)request.getSession().getAttribute("myboard");
 			
-			boolean isS=dao.insertBoard(new BoardDto(id,title,content));
+			boolean isS=dao.insertBoard(new BoardDto(id,title,content,fileup));
 			if(isS) {
 				if(myboard==null) {
 					response.sendRedirect("BoardController.do?command=boardlistpage");					
@@ -203,7 +269,13 @@ public class BoardController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher(url).forward(request, response);
 	}
+	
 
+	//랜던한 값 32자리 만드는 메서드
+	public String createUUId() {
+		return UUID.randomUUID().toString().replaceAll("-", "") ;//"1248d6s1-21548624-21456896-12442356"
+				       									         //--> "-"제거하고 32자리 변경
+	}
 }
 
 
