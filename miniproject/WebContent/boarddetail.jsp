@@ -17,14 +17,45 @@
    */
    #replyForm{display: none;}
    #container{
-      height: 400px;
+      height: 800px;
       width: 800px;
-      border: 1px solid red;
+/*       border: 1px solid red; */
       overflow: auto;
+      align-content: center;
    }
    
-   .hk{width: 680px; height:400px; vertical-align: top;}
-
+   .hk{width: 300px; height:400px; vertical-align: top;}
+	 table.type03 {
+       border-collapse: collapse;
+       
+       text-align: left;
+       line-height: 1.5;
+       border-top: 1px solid #ccc;
+       border-left: 3px solid #138535;
+     margin : 20px 10px;
+     
+   }
+   table.type03 th {
+       width: 147px;
+       padding: 10px;
+       font-weight: bold;
+       vertical-align: top;
+       color: #138535;
+       border-right: 1px solid #ccc;
+       border-bottom: 1px solid #ccc;
+   
+   }
+   table.type03 td {
+       width: 700px;
+       padding: 10px;
+       vertical-align: top;
+       border-right: 1px solid #ccc;
+       border-bottom: 1px solid #ccc;
+   }
+   .img{
+   	width:300px;
+   	height: 200px;
+   }
 </style>
 <script type="text/javascript">
   
@@ -37,8 +68,8 @@
 %>
 <jsp:include page="header.jsp"  />
 <div id="container">
-<h1>게시글상세보기</h1>
-<table border="1">
+<h1 style="text-align: center;">게시글상세보기</h1>
+<table class="type03">
    <tr>
       <th>번호</th>
       <td>${requestScope.dto.seq}</td>
@@ -51,11 +82,13 @@
       <th>제목</th>
       <td>${dto.title}</td>
    </tr>
+   <%if(dto1.getFileup()!=null){ %>
    <tr>
-   	  <th>이미지</th>
-   	  <td><img src="upload/${dto.fileup}"></td>  	 
-   <tr>
-      <th>내용</th>
+        <th>이미지</th>
+        <td><img src="upload/${dto.fileup}"></td>      
+   <tr>   
+   <% }%>
+      <th class="">내용</th>
       
       <td class="hk">${dto.content}</td>
    </tr>
@@ -84,22 +117,24 @@
          %>
         <%
          if(Tid.equals(dto1.getId())||Trole.equals("ADMIN")){
-       	%>
+            if(dto1.getSellbuy().equals("미판매")){
+          %>
             <button onclick="location.href='BoardController.do?command=sellbuy&seq=${dto.seq}'" style="float: right;">판매완료</button>
         <% 
         }
+      }
         %>
         </td>
    </tr>
 </table>
 <div id="replyForm">
-<h1>답글달기</h1>
+<h1>&nbsp; 답글달기</h1>
 <form action="BoardController.do" method="post" >
 <input type="hidden" name="command" value="replyboard"/>
 <input type="hidden" name="seq" value="${dto.seq}"/>
 <input type="hidden" name="id" value="${sessionScope.ldto.tid}"/>
 
-<table border="1">
+<table class="type03">
    <tr>
       <th>작성자</th>
       <td>${sessionScope.ldto.tid}</td>
@@ -149,19 +184,9 @@
       location.href="BoardController.do?command=updateForm&seq="+seq;
    }
    function delBoard(seq){
-      <%
-      
-      
-      if(Trole.equals("admin")){
-         %>
+     
          location.href="BoardController.do?command=muldel&chk="+seq;
-         <%
-      }else{
-         %>
-         location.href="BoardController.do?command=muldel2&chk="+seq;
-      <%
-      }
-      %>
+     
       
    }
 </script>

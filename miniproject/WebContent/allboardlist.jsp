@@ -80,13 +80,13 @@ ul li {
    position: relative;
 }
 .list-table {
-	
+   
    margin-top: 40px;
 }
 .list-table thead th{
    height:40px;
    border-right: 1px solid #ccc;
-	 
+    
    border-top:2px solid #09C;
    border-bottom:1px solid #CCC;
    font-weight: bold;
@@ -187,7 +187,9 @@ img{width: 12px; height: 12px;}
       </c:otherwise>
    </c:choose>
    <tr>
+               
                <td colspan="7" style="text-align: center;">
+               <input type="submit" value="글삭제" style="position: absolute; left:70px; top:353px;"  />
                   <% String myBoard=(String)session.getAttribute("myboard");
                      if(myBoard==null){
                         %>
@@ -217,8 +219,10 @@ img{width: 12px; height: 12px;}
                         
                         <%
                      }
-                  %>   
+                  %>
+                      
                </td>
+              
             </tr>
             
             </tbody>
@@ -228,14 +232,13 @@ img{width: 12px; height: 12px;}
 <div id="write_btn">
 <input type="button" value="글추가" 
                 onclick="location.href='BoardController.do?command=insertForm'"/>
-         <input type="submit" value="글삭제"/>  
+          
 </div>
 <jsp:include page="footer.jsp" />
 
 </div>
 </body>
 </html>
-
 
 
 

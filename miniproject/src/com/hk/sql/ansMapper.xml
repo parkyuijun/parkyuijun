@@ -77,7 +77,7 @@
 	</insert>
 	
 	<update id="updateboard" parameterType="BoardDto">
-		UPDATE BOARDTABLE SET TITLE=#{title},CONTENT=#{content},FILEUP=#{fileup},REGDATE=SYSDATE 
+		UPDATE BOARDTABLE SET TITLE=#{title},CONTENT=#{content},REGDATE=SYSDATE 
 		WHERE SEQ=#{seq} 
 	</update>
 	
@@ -110,7 +110,7 @@
 		VALUES(BOARDTABLE_SEQ.NEXTVAL,#{id},#{title},#{content},
 		(SELECT REF FROM BOARDTABLE WHERE SEQ=#{seq}), 
 		(SELECT STEP FROM BOARDTABLE WHERE SEQ=#{seq})+1, 
-		(SELECT DEPTH FROM BOARDTABLE WHERE SEQ=#{seq})+1,0,'N',SYSDATE,'N','Y',FILEUP=#{fileup})
+		(SELECT DEPTH FROM BOARDTABLE WHERE SEQ=#{seq})+1,0,'N',SYSDATE,'N','Y','')
 	</insert>
 	
 	<select id="contentAjax" parameterType="int" resultType="BoardDto">

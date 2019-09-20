@@ -39,7 +39,7 @@
 	
 	}
 	table.type03 td {
-	    width: 349px;
+	    width: 700px;
 	    padding: 10px;
 	    vertical-align: top;
 	    border-right: 1px solid #ccc;

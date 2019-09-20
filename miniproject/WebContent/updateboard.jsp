@@ -1,3 +1,4 @@
+<%@page import="com.hk.dtos.BoardDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%request.setCharacterEncoding("utf-8"); %>
 <%response.setContentType("text/html; charset=UTF-8"); %>
@@ -16,6 +17,34 @@
 <script type="text/javascript" src="./js/smarteditor2.js" charset="utf-8"></script>
 <style type="text/css">
 td{width: 680px;}
+table.type03 {
+       border-collapse: collapse;
+       
+       text-align: left;
+       line-height: 1.5;
+       border-top: 1px solid #ccc;
+       border-left: 3px solid #138535;
+     margin : 20px 10px;
+     
+   }
+   table.type03 th {
+       width: 147px;
+       padding: 10px;
+       font-weight: bold;
+       vertical-align: top;
+       color: #138535;
+       border-right: 1px solid #ccc;
+       border-bottom: 1px solid #ccc;
+   
+   }
+   table.type03 td {
+       width: 700px;
+       padding: 10px;
+       vertical-align: top;
+       border-right: 1px solid #ccc;
+       border-bottom: 1px solid #ccc;
+   }
+  
 </style>
 <script type="text/javascript">
 
@@ -38,11 +67,14 @@ $(function(){
 </script>
 </head>
 <body>
-<h1>게시글수정하기</h1>
+<h1 style="text-align: center;">게시글수정하기</h1>
+<%
+    BoardDto dto1=(BoardDto)request.getAttribute("dto");
+%>
 <form action="BoardController.do" method="post">
 <input type="hidden" name="command" value="updateboard"/>
 <input type="hidden" name="seq" value="${dto.seq}"/>
-<table border="1">
+<table class="type03" style="margin-left: auto; margin-right: auto;">
 	<tr>
 		<th>번호</th>
 		<td>${requestScope.dto.seq}</td>
@@ -55,10 +87,12 @@ $(function(){
 		<th>제목</th>
 		<td><input type="text" name="title" value="${dto.title}"/></td>
 	</tr>
-	<tr>
-		<th>이미지</th>
-		<td><img name="fileup" alt="" src="upload/${dto.fileup}"></td>
-	</tr>
+	<%if(dto1.getFileup()!=null){ %>
+   <tr>
+        <th>이미지</th>
+        <td><img src="upload/${dto.fileup}"></td>      
+   <tr>   
+   <% }%>
 	<tr>
 		<th>내용</th>
 <%-- 		<td><textarea rows="10" cols="60" name="content">${dto.content}</textarea> </td> --%>

@@ -86,7 +86,7 @@ h1 {text-align: center;}
    <col width="500px" />
    <col width="150px" />
    <col width="200px" />
-   <col width="100px" />
+   <col width="130px" />
    <col width="100px" />
    
    <thead>

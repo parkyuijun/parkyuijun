@@ -23,7 +23,7 @@
 	}
 	
 	body{
-	  min-height: 100vh;
+	  min-height:150vh;
 	  background-image: linear-gradient(120deg,#3498db,#8e44ad);
 	}
 	
