@@ -189,7 +189,6 @@ img{width: 12px; height: 12px;}
    <tr>
                
                <td colspan="7" style="text-align: center;">
-               <input type="submit" value="글삭제" style="position: absolute; left:70px; top:353px;"  />
                   <% String myBoard=(String)session.getAttribute("myboard");
                      if(myBoard==null){
                         %>
@@ -228,12 +227,15 @@ img{width: 12px; height: 12px;}
             </tbody>
                  
 </table>
-</form>
+
 <div id="write_btn">
 <input type="button" value="글추가" 
                 onclick="location.href='BoardController.do?command=insertForm'"/>
-          
-</div>
+               <input type="submit" value="글삭제" />
+                </div>
+
+          </form>
+
 <jsp:include page="footer.jsp" />
 
 </div>
